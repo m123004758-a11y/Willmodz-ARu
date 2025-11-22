@@ -1,1 +1,395 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Audition 輔助 — BlueTech</title>
+  <meta name="description" content="Audition 遊戲輔助 — 自動掛機 / 自動過故事 / 情侶花園 / VIP 輔助。安全、穩定、簡潔介紹頁面。" />
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
+  <!-- Google font (if available) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg1: #071026;
+      --bg2: #0b2440;
+      --accent: #0fb3ff;
+      --accent-2: #4aa6ff;
+      --glass: rgba(255,255,255,0.04);
+      --card: rgba(255,255,255,0.03);
+      --text: #eaf6ff;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: 'Inter', system-ui, -apple-system, "Helvetica Neue", Arial;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(15,179,255,0.06), transparent),
+                  linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 100%);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      overflow-x:hidden;
+    }
+
+    /* Animated tech background lines */
+    .bg-lines{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:0;
+      overflow:hidden;
+      opacity:0.45;
+      mix-blend-mode:screen;
+    }
+    .line{
+      position:absolute;
+      height:2px;
+      background:linear-gradient(90deg, transparent, rgba(15,179,255,0.14), transparent);
+      animation:moveX 14s linear infinite;
+      filter: blur(0.6px);
+    }
+    .line.l1{top:8%; left:-40%; width:160% ; animation-duration:22s}
+    .line.l2{top:30%; left:-30%; width:140% ; animation-duration:18s}
+    .line.l3{top:52%; left:-50%; width:200% ; animation-duration:26s}
+    .line.l4{top:76%; left:-20%; width:120% ; animation-duration:20s}
+    @keyframes moveX { from{ transform:translateX(0)} to{ transform:translateX(20%) } }
+
+    /* Container */
+    .wrap{position:relative; z-index:10; max-width:1100px; margin:28px auto; padding:28px;}
+
+    header{display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:22px}
+    .brand{display:flex;align-items:center;gap:14px}
+    .logo{
+      width:56px;height:56px;border-radius:10px;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      display:flex;align-items:center;justify-content:center;font-weight:800;color:#022;
+      box-shadow:0 6px 18px rgba(0,0,0,0.45), 0 0 30px rgba(15,179,255,0.08) inset;
+      font-family:monospace;
+    }
+    .brand h1{font-size:18px;margin:0}
+    .brand p{margin:0;font-size:12px;color:rgba(234,246,255,0.7)}
+
+    nav{display:flex;gap:12px; align-items:center}
+    .btn{
+      background:transparent;border:1px solid rgba(255,255,255,0.06); padding:10px 14px;border-radius:10px;color:var(--text);cursor:pointer;
+      font-weight:600;font-size:13px;backdrop-filter: blur(6px);
+    }
+    .btn.primary{
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      color:#022;border: none; box-shadow: 0 6px 18px rgba(11,36,64,0.6);
+    }
+    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06)}
+
+    /* Hero */
+    .hero{
+      display:flex;gap:28px; align-items:center; padding:28px; border-radius:14px; background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      border:1px solid rgba(255,255,255,0.03); box-shadow: 0 10px 40px rgba(2,10,20,0.5);
+    }
+    .hero-left{flex:1; min-width:220px}
+    .hero-left h2{margin:0;font-size:28px}
+    .hero-left p{margin:10px 0 18px; color:rgba(234,246,255,0.8)}
+    .hero-cta{display:flex;gap:12px;flex-wrap:wrap}
+
+    /* hero visual */
+    .hero-right{
+      width:380px; max-width:40%; min-width:240px; position:relative;
+      background: linear-gradient(120deg, rgba(15,179,255,0.06), rgba(74,166,255,0.03));
+      border-radius:12px;padding:16px;border:1px solid rgba(255,255,255,0.03);
+    }
+    .card-sim{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:10px;padding:12px;
+      display:flex;flex-direction:column;gap:8px;
+      box-shadow: 0 6px 30px rgba(2,10,20,0.45);
+    }
+    .status{display:flex;gap:12px;align-items:center}
+    .dot{width:10px;height:10px;border-radius:50%;background:linear-gradient(90deg,#12ffec,#0fb3ff)}
+    .muted{font-size:12px;color:rgba(234,246,255,0.7)}
+
+    /* Features */
+    .features{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:22px}
+    .feature{
+      padding:18px;border-radius:10px;background:var(--card);border:1px solid rgba(255,255,255,0.02);
+      min-height:120px;display:flex;flex-direction:column;gap:10px;
+    }
+    .feature h3{margin:0;font-size:16px}
+    .feature p{margin:0;color:rgba(234,246,255,0.75);font-size:13px}
+
+    /* VIP */
+    .vip{
+      margin-top:22px;padding:18px;border-radius:12px;background:linear-gradient(90deg, rgba(15,179,255,0.03), rgba(74,166,255,0.02));
+      border:1px solid rgba(15,179,255,0.06);
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+    }
+    .vip .info{display:flex;flex-direction:column}
+    .chip{padding:6px 10px;border-radius:999px;background:rgba(11,36,64,0.6);font-weight:700;font-size:13px}
+
+    /* Contact */
+    .contact{margin-top:18px;display:flex;gap:12px;align-items:center}
+    .discord{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:10px;background:linear-gradient(90deg,#2a6cff,#00d1ff);color:#fff;font-weight:700;text-decoration:none}
+
+    /* Section titles */
+    .sec{
+      margin-top:28px;padding:18px;border-radius:12px;background:transparent;border:1px solid rgba(255,255,255,0.02)
+    }
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .faq .q{padding:12px;border-radius:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.01)}
+
+    footer{margin-top:28px;padding:18px;color:rgba(234,246,255,0.6);font-size:13px;text-align:center}
+
+    /* Responsive */
+    @media (max-width:900px){
+      .features{grid-template-columns:repeat(2,1fr)}
+      .hero{flex-direction:column}
+      .hero-right{max-width:100%}
+      .grid-2{grid-template-columns:1fr}
+    }
+    @media (max-width:520px){
+      .features{grid-template-columns:1fr}
+      header{flex-direction:column;align-items:flex-start;gap:12px}
+      .brand h1{font-size:16px}
+    }
+
+    /* small utility */
+    .muted-2{color:rgba(234,246,255,0.65);font-size:13px}
+    .tag{background:rgba(255,255,255,0.03);padding:6px 8px;border-radius:8px;font-weight:600;font-size:12px}
+  </style>
+</head>
+<body>
+  <div class="bg-lines" aria-hidden="true">
+    <div class="line l1"></div>
+    <div class="line l2"></div>
+    <div class="line l3"></div>
+    <div class="line l4"></div>
+  </div>
+
+  <div class="wrap" role="main">
+    <header>
+      <div class="brand">
+        <div class="logo">AU</div>
+        <div>
+          <h1>Audition 輔助 — BlueTech</h1>
+          <p>自動掛機 · 自動過故事 · 情侶花園 · VIP 輔助</p>
+        </div>
+      </div>
+
+      <nav>
+        <button class="btn ghost" onclick="scrollToSection('features')">功能</button>
+        <button class="btn ghost" onclick="scrollToSection('vip')">VIP</button>
+        <a class="btn primary" href="https://discord.gg/CW8v9RW8" target="_blank" rel="noopener noreferrer">加入 Discord</a>
+      </nav>
+    </header>
+
+    <section class="hero" aria-label="網站簡介">
+      <div class="hero-left">
+        <h2>專為 Audition 設計的藍色科技輔助頁面</h2>
+        <p>穩定、簡潔、專注功能。提升遊戲體驗與效率 — 支援自動掛機、自動過故事、自動情侶花園與 VIP 高階功能。</p>
+        <div class="hero-cta">
+          <button class="btn primary" onclick="openVip()">查看 VIP 方案</button>
+          <a class="btn" href="https://discord.gg/CW8v9RW8" target="_blank" rel="noopener">立即聯繫（Discord）</a>
+        </div>
+
+        <div style="margin-top:14px;color:rgba(234,246,255,0.65);font-size:13px">
+          <span class="tag">平台</span> &nbsp; 桌機 / 筆電（Windows）
+        </div>
+      </div>
+
+      <div class="hero-right" aria-hidden="true">
+        <div class="card-sim">
+          <div class="status">
+            <div style="flex:1">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <div style="font-weight:700">狀態模擬面板</div>
+                <div class="muted">v1.0 • Demo</div>
+              </div>
+              <div style="margin-top:8px;font-size:13px;color:rgba(234,246,255,0.7)">
+                自動掛機：已啟動<br>
+                情侶花園：連線中<br>
+                自動過故事：排程設定
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:12px;display:flex;gap:8px">
+            <div style="flex:1;padding:10px;border-radius:8px;background:rgba(255,255,255,0.01);text-align:center">
+              <div style="font-weight:800;font-size:22px">99%</div>
+              <div class="muted">穩定率</div>
+            </div>
+            <div style="flex:1;padding:10px;border-radius:8px;background:rgba(255,255,255,0.01);text-align:center">
+              <div style="font-weight:800;font-size:22px">24/7</div>
+              <div class="muted">支援時間</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- features -->
+    <section id="features" class="sec" aria-labelledby="features-title">
+      <h2 id="features-title" style="margin:0 0 10px 0">主要功能</h2>
+      <div class="features" role="list">
+        <article class="feature" role="listitem">
+          <h3>自動掛機（Auto AFK）</h3>
+          <p>可設定在指定房間或頻道自動掛機、收取資源，支援時間排程與重連機制，降低因斷線造成的損失。</p>
+        </article>
+
+        <article class="feature" role="listitem">
+          <h3>自動過故事（Auto Quest）</h3>
+          <p>自動閱讀並完成遊戲內日常任務、過關流程與短劇情，提供穩定的判斷邏輯與容錯處理。</p>
+        </article>
+
+        <article class="feature" role="listitem">
+          <h3>自動情侶花園（Couple Garden）</h3>
+          <p>自動進入情侶花園、執行種植或互動流程，並內建重試機制以避免卡在花園外的情況。</p>
+        </article>
+
+        <article class="feature" role="listitem">
+          <h3>VIP 輔助（高階）</h3>
+          <p>VIP 用戶可享高優先支援、更短的更新輪替、專屬功能與自訂腳本設定介面。</p>
+        </article>
+
+        <article class="feature" role="listitem">
+          <h3>穩定與安全</h3>
+          <p>採用多重容錯與偵測機制，自動重連、錯誤回報與記錄，方便除錯與快速修正問題。</p>
+        </article>
+
+        <article class="feature" role="listitem">
+          <h3>簡單設定與介面</h3>
+          <p>提供直覺式設定介面（示意）與預設腳本，讓使用者快速上手並降低操作門檻。</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- VIP -->
+    <section id="vip" class="vip" aria-labelledby="vip-title">
+      <div class="info">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div class="chip">VIP</div>
+          <div>
+            <div id="vip-title" style="font-weight:800">VIP 高階方案</div>
+            <div class="muted-2">享有更多自訂功能、專屬客服與更新優先權</div>
+          </div>
+        </div>
+        <div style="margin-top:10px;color:rgba(234,246,255,0.75);font-size:13px">
+          範例項目：高速自動排程、專屬腳本調校、優先問題回報窗口。
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:10px">
+        <div style="font-weight:800;font-size:18px">升級你的體驗</div>
+        <div style="display:flex;gap:8px">
+          <button class="btn" onclick="openVip()">方案說明</button>
+          <a class="btn primary" href="https://discord.gg/CW8v9RW8" target="_blank" rel="noopener">聯絡我們</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- screenshots / demo -->
+    <section class="sec" aria-labelledby="screens-title" style="margin-top:18px">
+      <h3 id="screens-title" style="margin-top:0">示意截圖</h3>
+      <div class="grid-2" style="gap:12px">
+        <div style="height:180px;border-radius:10px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));display:flex;align-items:center;justify-content:center;color:rgba(234,246,255,0.45);font-weight:700">
+          截圖 / GIF（佔位）
+        </div>
+        <div style="height:180px;border-radius:10px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));display:flex;align-items:center;justify-content:center;color:rgba(234,246,255,0.45);font-weight:700">
+          操作介面示意（佔位）
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="sec faq" aria-labelledby="faq-title">
+      <h3 id="faq-title" style="margin-top:0">常見問題</h3>
+      <div class="grid-2" style="margin-top:12px">
+        <div class="q">
+          <strong>Q：使用會不會被遊戲封鎖？</strong>
+          <p class="muted" style="margin-top:6px">A：我們建議使用者詳讀風險說明並僅於私人測試或主動允許的環境下使用。產品設計重視穩定與容錯，但無法保證 100% 免風險。</p>
+        </div>
+        <div class="q">
+          <strong>Q：如何取得 VIP？</strong>
+          <p class="muted" style="margin-top:6px">A：請加入 Discord 與我們客服聯繫，我們會提供詳細方案與付款方式。</p>
+        </div>
+        <div class="q">
+          <strong>Q：支援平台與語言？</strong>
+          <p class="muted" style="margin-top:6px">A：目前主要支援 Windows 桌機版介面（中文/英文界面）。進階需求可在 Discord 討論。</p>
+        </div>
+        <div class="q">
+          <strong>Q：有更新與維護嗎？</strong>
+          <p class="muted" style="margin-top:6px">A：有。VIP 用戶享有更新優先與專屬回報窗口。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- contact -->
+    <section class="sec" aria-labelledby="contact-title">
+      <h3 id="contact-title" style="margin-top:0">聯繫我們</h3>
+      <div class="contact">
+        <a class="discord" href="https://discord.gg/CW8v9RW8" target="_blank" rel="noopener noreferrer">
+          <svg width="18" height="18" viewBox="0 0 245 240" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M104.4 104.942c-5.7 0-10.2 5-10.2 11.3 0 6.2 4.6 11.3 10.2 11.3 5.7 0 10.2-5.1 10.2-11.3 0-6.3-4.5-11.3-10.2-11.3zm36.1 0c-5.7 0-10.2 5-10.2 11.3 0 6.2 4.6 11.3 10.2 11.3 5.7 0 10.2-5.1 10.2-11.3 0-6.3-4.5-11.3-10.2-11.3z" fill="#fff"/></svg>
+          加入官方 Discord
+        </a>
+
+        <div class="muted-2">或在 Discord 上詢問：<strong>快速回應 • 技術支援 • VIP 詢價</strong></div>
+      </div>
+    </section>
+
+    <footer>
+      © <span id="year"></span> Audition 輔助 — BlueTech · 建議僅在私人測試環境使用。使用前請詳讀風險聲明。
+    </footer>
+  </div>
+
+  <!-- VIP Modal (simple) -->
+  <div id="vipModal" style="position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(2,8,20,0.6), rgba(2,8,20,0.85));z-index:9999">
+    <div style="width:92%;max-width:760px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:12px;padding:18px;border:1px solid rgba(15,179,255,0.07);">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <h3 style="margin:0">VIP 方案說明</h3>
+          <div style="color:rgba(234,246,255,0.75);font-size:13px;margin-top:6px">升級可獲：專屬腳本、自訂排程、快速客服、優先更新。</div>
+        </div>
+        <button class="btn" onclick="closeVip()">關閉</button>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px">
+        <div style="padding:12px;background:rgba(255,255,255,0.01);border-radius:8px">
+          <strong>入門 VIP</strong>
+          <p class="muted" style="margin-top:8px">自訂排程、優先回報通道。</p>
+        </div>
+        <div style="padding:12px;background:rgba(255,255,255,0.01);border-radius:8px">
+          <strong>專業 VIP</strong>
+          <p class="muted" style="margin-top:8px">專屬腳本 + 一對一調校支援。</p>
+        </div>
+      </div>
+
+      <div style="margin-top:12px;display:flex;gap:8px;justify-content:flex-end">
+        <a class="btn primary" href="https://discord.gg/CW8v9RW8" target="_blank" rel="noopener">聯絡客服 (Discord)</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // small interactions
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    function scrollToSection(id){
+      const el = document.getElementById(id);
+      if(!el) return;
+      el.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+
+    function openVip(){
+      document.getElementById('vipModal').style.display = 'flex';
+    }
+    function closeVip(){
+      document.getElementById('vipModal').style.display = 'none';
+    }
+
+    // accessibility: close modal with Esc
+    window.addEventListener('keydown', e => {
+      if(e.key === 'Escape') closeVip();
+    });
+  </script>
+</body>
+</html>
 
